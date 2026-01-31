@@ -9,11 +9,10 @@ export default defineConfig({
             '@': path.resolve(__dirname, './src'),
         },
     },
-    // Base path pour Electron (fichiers locaux)
-    base: './',
+    // Base path pour GitHub Pages
+    base: '/Eclipse.github.io/',
     build: {
         outDir: 'dist',
-        // Assurer la compatibilité avec Electron
         target: 'esnext',
         minify: 'esbuild',
     },
@@ -21,7 +20,6 @@ export default defineConfig({
         port: 5173,
         strictPort: true,
     },
-    // Optimisations pour Electron
     optimizeDeps: {
         exclude: ['electron']
     }

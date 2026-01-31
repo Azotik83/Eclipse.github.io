@@ -1,0 +1,26 @@
+<!DOCTYPE html>
+<html lang="fr">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="refresh" content="0; url=./index.html">
+    <script>
+        // Redirect pour le routing SPA sur GitHub Pages
+        const path = window.location.pathname;
+        const repo = '/Eclipse.github.io';
+        if (path.startsWith(repo)) {
+            const route = path.replace(repo, '');
+            if (route && route !== '/') {
+                sessionStorage.setItem('redirect', route);
+            }
+        }
+        window.location.replace('./index.html');
+    </script>
+    <title>Eclipse - Redirection</title>
+</head>
+
+<body>
+    Redirection...
+</body>
+
+</html>
