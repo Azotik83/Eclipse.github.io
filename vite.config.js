@@ -9,8 +9,8 @@ export default defineConfig({
             '@': path.resolve(__dirname, './src'),
         },
     },
-    // Base path pour GitHub Pages
-    base: '/Eclipse.github.io/',
+    // Base path par défaut pour Vercel
+    base: '/',
     build: {
         outDir: 'dist',
         target: 'esnext',
