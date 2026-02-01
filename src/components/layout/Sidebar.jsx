@@ -16,7 +16,7 @@ import { isStaff, getRoleBadge } from '../../lib/permissions'
 
 const navItems = [
     { path: '/nexus', icon: Home, label: 'Nexus', description: 'Tableau de bord', tourId: 'nexus' },
-    { path: '/channels', icon: MessageSquare, label: 'Secteurs', description: 'Chat communautaire', tourId: 'channels' },
+    { path: '/channels', icon: MessageSquare, label: 'Salons', description: 'Chat, Forums & Vocal', tourId: 'channels' },
     { path: '/dm', icon: Mail, label: 'Messages', description: 'Conversations privées', tourId: 'messages' },
     { path: '/events', icon: Calendar, label: 'Arènes', description: 'Défis & Événements', tourId: 'events' },
     { path: '/leaderboard', icon: Trophy, label: 'Chasse', description: 'Classement', tourId: 'leaderboard' },

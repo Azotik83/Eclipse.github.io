@@ -15,8 +15,8 @@ export const TOUR_STEPS = [
     {
         id: 'channels',
         target: '[data-tour="channels"]',
-        title: 'Channels',
-        content: 'Discute en temps réel avec la communauté. Partage tes victoires, pose des questions et motive les autres !',
+        title: 'Salons',
+        content: 'Chat en temps réel, forums de discussion et salons vocaux. Échange avec la communauté !',
         position: 'right'
     },
     {
