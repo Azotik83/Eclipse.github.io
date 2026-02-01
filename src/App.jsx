@@ -1,6 +1,6 @@
-import { useState } from 'react'
 import { Routes, Route, Navigate } from 'react-router-dom'
 import { useAuthStore } from './store/authStore'
+import { OnboardingProvider, useOnboarding } from './context/OnboardingContext'
 import MainLayout from './components/layout/MainLayout'
 import AuthPage from './pages/Auth/AuthPage'
 import Nexus from './pages/Nexus/Nexus'
@@ -10,12 +10,13 @@ import Profile from './pages/Profile/Profile'
 import Leaderboard from './pages/Leaderboard/Leaderboard'
 import Staff from './pages/Staff/Staff'
 import DirectMessages from './pages/DM/DirectMessages'
-import OnboardingModal from './components/onboarding/OnboardingModal'
+import WelcomeModal from './components/onboarding/WelcomeModal'
+import GuidedTour from './components/onboarding/GuidedTour'
 import { isCurrentlyBanned } from './lib/moderation'
 
-function App() {
-    const { user, profile, isLoading, completeOnboarding } = useAuthStore()
-    const [showOnboarding, setShowOnboarding] = useState(true)
+function AppContent() {
+    const { user, profile, isLoading } = useAuthStore()
+    const { shouldShowOnboarding, showWelcome, showTour } = useOnboarding()
 
     if (isLoading) {
         return (
@@ -60,36 +61,41 @@ function App() {
         )
     }
 
-    // Show onboarding for new users (only once per account)
-    if (profile && !profile.has_completed_onboarding && showOnboarding) {
-        return (
-            <OnboardingModal
-                onComplete={async () => {
-                    await completeOnboarding()
-                    setShowOnboarding(false)
-                }}
-            />
-        )
-    }
-
     return (
-        <MainLayout>
-            <Routes>
-                <Route path="/" element={<Navigate to="/nexus" replace />} />
-                <Route path="/nexus" element={<Nexus />} />
-                <Route path="/channels" element={<Channels />} />
-                <Route path="/channels/:channelId" element={<Channels />} />
-                <Route path="/dm" element={<DirectMessages />} />
-                <Route path="/dm/:conversationId" element={<DirectMessages />} />
-                <Route path="/events" element={<Events />} />
-                <Route path="/events/:eventId" element={<Events />} />
-                <Route path="/leaderboard" element={<Leaderboard />} />
-                <Route path="/profile" element={<Profile />} />
-                <Route path="/profile/:userId" element={<Profile />} />
-                <Route path="/staff" element={<Staff />} />
-                <Route path="*" element={<Navigate to="/nexus" replace />} />
-            </Routes>
-        </MainLayout>
+        <>
+            {/* Welcome Modal - Première étape */}
+            {shouldShowOnboarding && showWelcome && <WelcomeModal />}
+
+            {/* Guided Tour - Deuxième étape */}
+            {shouldShowOnboarding && showTour && <GuidedTour />}
+
+            {/* Main App */}
+            <MainLayout>
+                <Routes>
+                    <Route path="/" element={<Navigate to="/nexus" replace />} />
+                    <Route path="/nexus" element={<Nexus />} />
+                    <Route path="/channels" element={<Channels />} />
+                    <Route path="/channels/:channelId" element={<Channels />} />
+                    <Route path="/dm" element={<DirectMessages />} />
+                    <Route path="/dm/:conversationId" element={<DirectMessages />} />
+                    <Route path="/events" element={<Events />} />
+                    <Route path="/events/:eventId" element={<Events />} />
+                    <Route path="/leaderboard" element={<Leaderboard />} />
+                    <Route path="/profile" element={<Profile />} />
+                    <Route path="/profile/:userId" element={<Profile />} />
+                    <Route path="/staff" element={<Staff />} />
+                    <Route path="*" element={<Navigate to="/nexus" replace />} />
+                </Routes>
+            </MainLayout>
+        </>
+    )
+}
+
+function App() {
+    return (
+        <OnboardingProvider>
+            <AppContent />
+        </OnboardingProvider>
     )
 }
 

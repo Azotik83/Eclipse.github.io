@@ -15,12 +15,12 @@ import { useAuthStore } from '../../store/authStore'
 import { isStaff, getRoleBadge } from '../../lib/permissions'
 
 const navItems = [
-    { path: '/nexus', icon: Home, label: 'Nexus', description: 'Tableau de bord' },
-    { path: '/channels', icon: MessageSquare, label: 'Secteurs', description: 'Chat communautaire' },
-    { path: '/dm', icon: Mail, label: 'Messages', description: 'Conversations privées' },
-    { path: '/events', icon: Calendar, label: 'Arènes', description: 'Défis & Événements' },
-    { path: '/leaderboard', icon: Trophy, label: 'Chasse', description: 'Classement' },
-    { path: '/profile', icon: User, label: 'Profil', description: 'Mon espace' },
+    { path: '/nexus', icon: Home, label: 'Nexus', description: 'Tableau de bord', tourId: 'nexus' },
+    { path: '/channels', icon: MessageSquare, label: 'Secteurs', description: 'Chat communautaire', tourId: 'channels' },
+    { path: '/dm', icon: Mail, label: 'Messages', description: 'Conversations privées', tourId: 'messages' },
+    { path: '/events', icon: Calendar, label: 'Arènes', description: 'Défis & Événements', tourId: 'events' },
+    { path: '/leaderboard', icon: Trophy, label: 'Chasse', description: 'Classement', tourId: 'leaderboard' },
+    { path: '/profile', icon: User, label: 'Profil', description: 'Mon espace', tourId: 'profile' },
 ]
 
 export default function Sidebar() {
@@ -43,7 +43,10 @@ export default function Sidebar() {
             </div>
 
             {/* Points d'Ombre */}
-            <div className="p-4 mx-4 mt-4 rounded-xl bg-gradient-to-r from-accent-purple/20 to-accent-blue/20 border border-accent-purple/30">
+            <div
+                className="p-4 mx-4 mt-4 rounded-xl bg-gradient-to-r from-accent-purple/20 to-accent-blue/20 border border-accent-purple/30"
+                data-tour="points"
+            >
                 <div className="flex items-center justify-between">
                     <div className="flex items-center gap-2">
                         <Zap className="w-5 h-5 text-accent-purple" />
@@ -57,10 +60,11 @@ export default function Sidebar() {
 
             {/* Navigation */}
             <nav className="flex-1 p-4 space-y-1 overflow-y-auto">
-                {navItems.map(({ path, icon: Icon, label, description }) => (
+                {navItems.map(({ path, icon: Icon, label, description, tourId }) => (
                     <NavLink
                         key={path}
                         to={path}
+                        data-tour={tourId}
                         className={({ isActive }) => `
               flex items-center gap-3 px-4 py-3 rounded-xl transition-all duration-200
               ${isActive
